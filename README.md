@@ -15,7 +15,7 @@
 1. Clone this repo:
 
 ```sh
-$ git clone https://github.com/mmartinsoliv/me.com.git
+$ git clone https://github.com/mmartinsoliv/me.git
 ```
 
 2. Then go to the project's folder:
