@@ -1,0 +1,38 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main>
+			<h1>🧑‍🚀 Hey, I'm Matheus!</h1>
+			<p>
+				Frontend developer, open source enthusiast and challenge lover.
+			</p>
+			<p>
+			    UI developer at <a href="https://www.mercadolivre.com.br/" target="_blank" >Mercado Livre</a>
+			</p>
+			<p class="projects">Open-source projects:</p>
+			<ul>
+				<li><a href="https://github.com/gympass/yoga" target="_blank">yoga</a></li>
+				<li><a href="https://github.com/vercel/next.js" target="_blank">next.js</a></li>
+				<li><a href="https://github.com/React95/React95" target="_blank">react 95</a></li>
+				<li><a href="https://github.com/mmartinsoliv/konoha-web-components" target="_blank">konoha</a></li>
+			</ul>
+		</main>
+		<Footer />
+		<style>
+			.projects {
+				font-weight: bold;
+			}
+		</style>
+	</body>
+</html>
