@@ -8,7 +8,7 @@
 
 - **Content:** [Markdown](https://daringfireball.net/projects/markdown/)
 - **Front-end:** [Astro](https://astro.build/)
-- **CSS:** [Tailwind](https://tailwind.com)
+- **CSS:** [Tailwind](https://tailwindcss.com)
 - **Deployment:** [Vercel](https://vercel.com/)
 
 ## Running locally
