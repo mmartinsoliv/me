@@ -1,12 +1,150 @@
 ---
-import "../styles/global.css";
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css'
+
+const building = [
+  {
+    title: "Craft",
+    description: "Implementing interfaces and interactions.",
+    link: "#"
+  },
+]
+
+const projects = [
+  {
+    title: "HK",
+    icon: true,
+    description: "Composable command menu React component.",
+    link: "#"
+  },
+    {
+    title: "Writer",
+    icon: true,
+    description: "Plain text editor with a focus on performance.",
+    link: "#"
+  },
+  {
+    title: "Next Themes",
+    icon: true,
+    description: "Perfect dark mode in Next.js apps.",
+    link: "#"
+  }
+];
+
+const writing = [
+  {
+    title: "React Hook Getter Pattern",
+    description: "Simple, efficient React state hook in 50 lines.",
+    link: "#"
+  },
+  {
+    title: "Redesign 2021",
+    description: "Return to simplicity.",
+    link: "#"
+  },
+  {
+    title: "All writing",
+    description: "Infrequent thoughts on design and code.",
+    link: "#"
+  }
+]
 ---
 
-<main>
-	<div class="max-lg:grid-cols-[auto_var(--content-width)_auto] max-lg:gap-x-4">
-		<article class="relative w-full max-w-[var(--content-width)] text-[var(--text-color)]">
-			<h1 class="mb-7">Matheus Martins</h1>
-			<p>Crafting interfaces. Building polished software and web experiences. Experimenting with magical details in user interfaces. UI Engineer at VTEX.</p>
-		</article>
-	</div>
-</main>
+<Layout title="Matheus Martins">
+  <div class="max-w-4xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
+    <main class="space-y-16">
+
+      <!-- Intro Section -->
+      <section class="animate-section space-y-6">
+        <h1 class="text-2xl font-medium text-white">Matheus Martins</h1>
+        <p class="text-lg text-neutral-400">
+          Crafting interfaces. Building polished software and web experiences. Experimenting with magical details in user interfaces. Webmaster at <a href="#" class="text-white hover:underline underline-offset-4">Linear</a>.
+        </p>
+        <p class="text-lg text-neutral-400">
+          In the past I've developed the <a href="#" class="text-white hover:underline underline-offset-4">Vercel design system</a>, website, and dashboard.
+        </p>
+      </section>
+
+      <!-- Main Content Grid -->
+      <section class="animate-section grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Building Column -->
+        <div class="space-y-8">
+			<h2 class="text-neutral-500">Bulding</h2>
+			 <div class="space-y-6">
+			  {building.map(item => (
+				<a href={item.link} class="block group">
+				  <h3 class="text-white font-medium">{item.title}</h3>
+				  <p class="text-neutral-400">{item.description}</p>
+				</a>
+			  ))}
+			</div>
+		 </div>
+
+        <!-- Projects Column -->
+        <div class="space-y-8">
+          <h2 class="text-neutral-500">Projects</h2>
+          <div class="space-y-6">
+            {projects.map(project => (
+              <a href={project.link} class="block group">
+                <h3 class="text-white font-medium flex items-center gap-2">
+                  {project.title}
+                  {project.icon && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-500 group-hover:text-white transition-colors"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                  )}
+                </h3>
+                <p class="text-neutral-400">{project.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Writing Column -->
+        <div class="space-y-8">
+          <h2 class="text-neutral-500">Writing</h2>
+           <div class="space-y-6">
+            {writing.map(item => (
+              <a href={item.link} class="block group">
+                <h3 class="text-white font-medium">{item.title}</h3>
+                <p class="text-neutral-400">{item.description}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Now Section -->
+      <section class="animate-section space-y-6">
+        <h2 class="text-2xl font-medium text-white">Now</h2>
+        <p class="text-lg text-neutral-400">
+          Developing skill through doing, guiltlessly exploring passion and interests, imbuing quality. Mindful that <span class="text-white">everything around me is someone's life work.</span>
+        </p>
+         <p class="text-lg text-neutral-400">
+			All I want to do is build websites. Typography, motion design, copywriting, performance—the web is an endless medium of opportunity and creativity of which I’ve only scratched the surface.
+        </p>
+		<p class="text-lg text-neutral-400">
+			Enjoying deep, dark, boring dance music: songs that set the pace in the first ten seconds and maintain it for the next ten minutes. Deep is a curation of my favorites. Soothed by the inherent energy of drum and bass—Drum has my favorites.
+		</p>
+      </section>
+
+	  <section class="animate-section space-y-6">
+		<h2 class="text-2xl font-medium text-white">Connect</h2>
+		<a class="text-lg text-neutral-400">
+			Reach me at <a href="#" class="text-white hover:underline underline-offset-4">@mmartinsoliv</a> or <a href="#" class="text-white hover:underline underline-offset-4">mmartinsoliv github</a></p>
+		</p>	  
+	  </section>
+    </main>
+  </div>
+
+  <script>
+    // Client-side script to handle the staggered animation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Select all the sections you want to animate
+      const sections = document.querySelectorAll('.animate-section');
+
+      sections.forEach((section, index) => {
+        (section as HTMLElement).classList.add('fade-in-up');
+        (section as HTMLElement).style.animationDelay = `${index * 250}ms`;
+      });
+    });
+  </script>
+</Layout>
