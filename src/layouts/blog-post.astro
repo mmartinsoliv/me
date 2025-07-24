@@ -1,0 +1,158 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import '../styles/global.css';
+import FormattedDate from '../components/formatted-date.astro';
+import UndoIcon from '../assets/icons/undo.svg';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate } = Astro.props;
+---
+
+<style>
+	.prose {
+		--tw-prose-body: #d4d4d8;
+		--tw-prose-headings: #ffffff;
+		--tw-prose-links: #ffffff;
+		--tw-prose-bold: #ffffff;
+		--tw-prose-counters: #a3a3a3;
+		--tw-prose-bullets: #737373;
+		--tw-prose-hr: #404040;
+		--tw-prose-quotes: #d4d4d8;
+		--tw-prose-quote-borders: #404040;
+		--tw-prose-code: #e5e5e5;
+		--tw-prose-pre-code: #e5e5e5;
+		--tw-prose-pre-bg: #171717;
+		--tw-prose-th-borders: #525252;
+		--tw-prose-td-borders: #404040;
+	}
+
+	.prose :global(pre) {
+		background-color: #171717;
+		border: 1px solid #262626;
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		overflow-x: auto;
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
+
+	.prose :global(code) {
+		background-color: #262626;
+		color: #e5e5e5;
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.prose :global(pre code) {
+		background-color: transparent;
+		padding: 0;
+		color: #e5e5e5;
+		font-size: inherit;
+	}
+
+	.prose :global(h2) {
+		font-size: 1.25rem;
+		font-weight: 500;
+		color: #ffffff;
+		margin-top: 3rem;
+		margin-bottom: 1.5rem;
+		border-bottom: 1px solid #262626;
+		padding-bottom: 0.75rem;
+	}
+
+	.prose :global(h3) {
+		font-size: 1.125rem;
+		font-weight: 500;
+		color: #ffffff;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.prose :global(p) {
+		color: #d4d4d8;
+		line-height: 1.625;
+		margin-bottom: 1.5rem;
+	}
+
+	.prose :global(ul, ol) {
+		margin-bottom: 1.5rem;
+		padding-left: 1.5rem;
+	}
+
+	.prose :global(ul) {
+		list-style-type: disc;
+	}
+
+	.prose :global(ol) {
+		list-style-type: decimal;
+	}
+
+	.prose :global(li) {
+		color: #d4d4d8;
+		margin-bottom: 0.5rem;
+		display: list-item;
+	}
+
+	.prose :global(li::marker) {
+		color: #737373;
+	}
+
+	.prose :global(strong) {
+		color: #ffffff;
+		font-weight: 500;
+	}
+
+	.prose :global(a) {
+		color: #ffffff;
+		text-decoration: none;
+		transition: all 0.2s;
+	}
+
+	.prose :global(a:hover) {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.prose :global(blockquote) {
+		border-left: 4px solid #404040;
+		padding-left: 1.5rem;
+		font-style: italic;
+		color: #a3a3a3;
+	}
+</style>
+
+<Layout title={title}>
+	<main class="relative mx-auto max-w-[1072px] min-h-[calc(100vh-48px)] py-32">
+		<div class="grid grid-cols-1 gap-y-8 px-4 lg:grid-cols-[auto_640px_auto] lg:gap-x-16 lg:px-0">
+			
+			<nav class="sticky top-32 z-[1] col-start-1 h-fit whitespace-nowrap">
+				<a href="/writing" class="flex cursor-pointer items-center gap-2 leading-normal text-neutral-400 no-underline transition-colors hover:text-white">
+					<UndoIcon />
+					<span class="italic">Writing</span>
+				</a>
+			</nav>
+
+			<article class="flex flex-col gap-8 lg:col-start-2">
+				<header class="border-b border-b-[#2e2e2e] pb-8">
+					<h1 class="text-2xl font-medium text-white mb-4">{title}</h1>
+					<div class="text-sm text-neutral-500">
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<div class="italic">
+								Last updated on <FormattedDate date={updatedDate} />
+							</div>
+						)}
+					</div>
+				</header>
+				
+				<div class="prose prose-lg prose-invert max-w-none">
+					<slot />
+				</div>
+			</article>
+		</div>
+	</main>
+</Layout>
