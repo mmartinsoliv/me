@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/global.css'
+import UndoIcon from '../../assets/icons/undo.svg'
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+interface Post {
+    title: string;
+    slug: string;
+    date: string;
+}
+
+interface YearGroup {
+    year: number;
+    posts: Post[];
+}
+
+const posts = await getCollection('blog');
+const postsByYear: Record<number, Post[]> = posts.reduce((acc: Record<number, Post[]>, post: CollectionEntry<'blog'>) => {
+    const year = new Date(post.data.pubDate).getFullYear();
+    if (!acc[year]) {
+        acc[year] = [];
+    }
+    acc[year].push({
+        title: post.data.title,
+        slug: post.id,
+        date: new Date(post.data.pubDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' })
+    });
+    return acc;
+}, {} as Record<number, Post[]>);
+
+const articles: YearGroup[] = Object.entries(postsByYear)
+    .map(([year, posts]) => ({ year: parseInt(year), posts }))
+    .sort((a, b) => b.year - a.year);
+---
+
+<Layout title="Writing - Matheus Martins">
+	<main class="relative mx-auto max-w-[1072px] min-h-[calc(100vh-48px)] py-32">
+	  <div class="grid grid-cols-1 gap-y-8 px-4 lg:grid-cols-[auto_640px_auto] lg:gap-x-16 lg:px-0">
+		
+		<nav class="sticky top-32 z-[1] col-start-1 h-fit whitespace-nowrap">
+		  <a href="/" class="flex cursor-pointer items-center gap-2 leading-normal text-neutral-400 no-underline transition-colors hover:text-white">
+			<UndoIcon />
+			<span class="italic">Index</span>
+		  </a>
+		</nav>
+  
+		<div class="flex flex-col gap-8 lg:col-start-2">
+		  <h1>Writing</h1>
+  
+		  <div class="border-t border-t-[#2e2e2e]">
+			{articles.map(group => (
+			  <div class="flex flex-col gap-4 border-b border-b-[#2e2e2e] py-8 last:border-b-0">
+				
+				<p class="text-neutral-500">{group.year}</p>
+				
+				<div class="flex w-full flex-col">
+				  {group.posts.map(post => (
+					<a href={`/writing/${post.slug}`} class="group flex items-center justify-between py-2 no-underline">
+					  <span class="text-neutral-300 transition-colors group-hover:text-white">{post.title}</span>
+					  <span class="font-mono text-sm text-neutral-500">{post.date}</span>
+					</a>
+				  ))}
+				</div>
+			  </div>
+			))}
+		  </div>
+		</div>
+  
+		<div></div>
+	  </div>
+	</main>
+  </Layout>
