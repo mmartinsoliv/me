@@ -1,8 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import '../styles/global.css'
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const building = [
+interface ProjectItem {
+  title: string;
+  icon?: boolean;
+  description: string;
+  link: string;
+}
+
+interface WritingItem {
+  title: string;
+  description: string;
+  link: string;
+}
+
+const building: WritingItem[] = [
   {
     title: "Craft",
     description: "Implementing interfaces and interactions.",
@@ -10,44 +24,37 @@ const building = [
   },
 ]
 
-const projects = [
+const projects: ProjectItem[] = [
   {
-    title: "HK",
+    title: "Easy Hooks",
     icon: true,
-    description: "Composable command menu React component.",
-    link: "#"
-  },
-    {
-    title: "Writer",
-    icon: true,
-    description: "Plain text editor with a focus on performance.",
-    link: "#"
+    description: "React hook library, ready to use, written in Typescript.",
+    link: "https://github.com/mmartinsoliv/easy-hooks-ts"
   },
   {
-    title: "Next Themes",
+    title: "React95",
     icon: true,
-    description: "Perfect dark mode in Next.js apps.",
-    link: "#"
+    description: "A React components library with Win95 UI.",
+    link: "https://github.com/React95/React95"
+  },
+  {
+    title: "Yoga",
+    icon: true,
+    description: "Yoga design-system",
+    link: "https://github.com/gympass/yoga"
   }
 ];
 
-const writing = [
-  {
-    title: "React Hook Getter Pattern",
-    description: "Simple, efficient React state hook in 50 lines.",
-    link: "#"
-  },
-  {
-    title: "Redesign 2021",
-    description: "Return to simplicity.",
-    link: "#"
-  },
-  {
-    title: "All writing",
-    description: "Infrequent thoughts on design and code.",
-    link: "#"
-  }
-]
+const posts = await getCollection('blog');
+const latestPosts = posts
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+
+const writing: WritingItem[] = latestPosts.map((post: CollectionEntry<'blog'>) => ({
+  title: post.data.title,
+  description: post.data.description,
+  link: `/writing/${post.id}`
+}));
 ---
 
 <Layout title="Matheus Martins">
@@ -58,7 +65,7 @@ const writing = [
       <section class="animate-section space-y-6">
         <h1 class="text-2xl font-medium text-white">Matheus Martins</h1>
         <p class="text-lg text-neutral-400">
-          Crafting interfaces. Building polished software and web experiences. Experimenting with magical details in user interfaces. Webmaster at <a href="#" class="text-white hover:underline underline-offset-4">Linear</a>.
+          Crafting interfaces. Building polished software and web experiences. Experimenting with magical details in user interfaces. UI Engineer at <a href="https://vtex.com/en-us/" target="_blank" class="text-white hover:underline underline-offset-4">VTEX</a>.
         </p>
         <p class="text-lg text-neutral-400">
           In the past I've developed the <a href="#" class="text-white hover:underline underline-offset-4">Vercel design system</a>, website, and dashboard.
@@ -71,7 +78,7 @@ const writing = [
         <div class="space-y-8">
 			<h2 class="text-neutral-500">Bulding</h2>
 			 <div class="space-y-6">
-			  {building.map(item => (
+			  {building.map((item: WritingItem) => (
 				<a href={item.link} class="block group">
 				  <h3 class="text-white font-medium">{item.title}</h3>
 				  <p class="text-neutral-400">{item.description}</p>
@@ -80,12 +87,11 @@ const writing = [
 			</div>
 		 </div>
 
-        <!-- Projects Column -->
         <div class="space-y-8">
           <h2 class="text-neutral-500">Projects</h2>
           <div class="space-y-6">
-            {projects.map(project => (
-              <a href={project.link} class="block group">
+            {projects.map((project: ProjectItem) => (
+              <a href={project.link} target="_blank" class="block group">
                 <h3 class="text-white font-medium flex items-center gap-2">
                   {project.title}
                   {project.icon && (
@@ -98,11 +104,10 @@ const writing = [
           </div>
         </div>
 
-        <!-- Writing Column -->
         <div class="space-y-8">
           <h2 class="text-neutral-500">Writing</h2>
            <div class="space-y-6">
-            {writing.map(item => (
+            {writing.map((item: WritingItem) => (
               <a href={item.link} class="block group">
                 <h3 class="text-white font-medium">{item.title}</h3>
                 <p class="text-neutral-400">{item.description}</p>
@@ -128,8 +133,8 @@ const writing = [
 
 	  <section class="animate-section space-y-6">
 		<h2 class="text-2xl font-medium text-white">Connect</h2>
-		<a class="text-lg text-neutral-400">
-			Reach me at <a href="#" class="text-white hover:underline underline-offset-4">@mmartinsoliv</a> or <a href="#" class="text-white hover:underline underline-offset-4">mmartinsoliv github</a></p>
+		<p class="text-lg text-neutral-400">
+			Reach me at <a href="#" class="text-white hover:underline underline-offset-4">@mmartinsoliv</a></p>
 		</p>	  
 	  </section>
     </main>
