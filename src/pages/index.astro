@@ -53,7 +53,7 @@ const latestPosts = posts
 const writing: WritingItem[] = latestPosts.map((post: CollectionEntry<'blog'>) => ({
   title: post.data.title,
   description: post.data.description,
-  link: `/writing/${post.id}`
+  link: `/writing/${post.id.replace(/\.md$/, '')}`
 }));
 ---
 
